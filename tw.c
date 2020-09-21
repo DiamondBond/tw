@@ -1,6 +1,6 @@
 //  TW.c
 //  Original Author: Peter Meyer (1998-01-05)
-//  Revised by: Diamond Bond (2020-09-10)
+//  Updated by: Diamond Bond (2020-09-22)
 //  Calculate the value of the timewave at a point.
 
 #include <math.h>
@@ -9,6 +9,11 @@
 #include <string.h>
 #include <ctype.h>
 
+/*  THIS IS A WORKAROUND    */
+/* Explicit use of strlwr() */
+#include "strlwr.h"
+
+/*  Definitions */
 #define FALSE 0
 #define TRUE  1
 #define NUM_POWERS 48
@@ -18,6 +23,7 @@
 #define CALC_PREC       10   /*  precision in calculation  */
                              /*  of wave values            */
 
+/*  Variables  */
 double powers[NUM_POWERS];
 //  Powers of (normally) 64.
 //  Due to the limitations of double precision
@@ -33,18 +39,6 @@ char *usage = "\nUse: TW days_to_zero_date days days ... [wf=nn]."
 char temp[32];
 
 char *set_name[NUM_SETS] = { "Kelley", "Watkins", "Sheliak", "Huang Ti" };  
-
-char *strlwr(char *str)
-{
-  unsigned char *p = (unsigned char *)str;
-
-  while (*p) {
-     *p = tolower((unsigned char)*p);
-      p++;
-  }
-
-  return str;
-}
 
 //  The number sets.
 int w[NUM_SETS][NUM_DATA_POINTS] = 
@@ -148,7 +142,7 @@ for ( j=1; j<NUM_POWERS; j++ )
 double f(double x,
          int number_set)
 {
-register i;
+register int i;
 double sum = 0.0, last_sum = 0.0;
 
 if ( x )
@@ -202,7 +196,7 @@ double mult_power(double x,
 int *exponent = (int *)&x + 3;
 
 if ( wave_factor == 64 )
-    *exponent += i*0x60;/*  measurably faster  */
+    *exponent += i*0x60; /*  measurably faster  */
 else
     x *= powers[i];
 
