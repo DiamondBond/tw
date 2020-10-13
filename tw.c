@@ -1,6 +1,6 @@
 //  TW.c
 //  Original Author: Peter Meyer (1998-01-05)
-//  Updated by: Diamond Bond (2020-09-22)
+//  Updated by: Diamond Bond (2020-10-14)
 //  Calculate the value of the timewave at a point.
 
 #include <math.h>
@@ -64,7 +64,7 @@ double mult_power(double x, int i);
 double div_power(double x, int i);
 
 /*-----------------------------*/
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 double dtzp;
 int i, j, ch;
@@ -78,24 +78,18 @@ if ( argc == 1 )
 for ( i=1; i<argc; i++ )
     {
     strlwr(argv[i]);
-    if ( !memcmp(argv[i],"wf=",3) )
-        {
-        wave_factor = atoi(&argv[i][3]);
-        if ( wave_factor < 2 || wave_factor > 10000 )
-        {
-        printf("%s",usage);
-        exit(2);
-        }
-    }
-else
-    {
-    ch = argv[i][0];
-    if ( ! ( ( ch == '.' )
-     || ( (unsigned int)(ch-'0') <= 9 ) ) )
-        {
-        printf("%s",usage);
+    if (!memcmp(argv[i], "wf=", 3)) {
+      ch = argv[i][0];
+      if (!((ch == '.') || ((unsigned int)(ch - '0') <= 9))) {
+        printf("%s", usage);
         exit(3);
-        }
+      }
+    } else {
+      wave_factor = atoi(&argv[i][3]);
+      if (wave_factor < 2 || wave_factor > 10000) {
+        printf("%s", usage);
+        exit(2);
+      }
     }
 }
 
@@ -114,7 +108,7 @@ for ( i=1; i<argc; i++ )
         strcat(temp,"0 day");
         if ( dtzp != 1.0 )
             strcat(temp,"s");
-        printf("\nThe value of the timewave %s prior to the zero point is\n",temp); 
+        printf("\nThe value of the timewave %s prior to the zero point is\n",temp);
         for ( number_set=0; number_set<NUM_SETS; number_set++ )
             {
             printf("%.*f (%s)\n",PREC,f(dtzp,number_set),set_name[number_set]);
