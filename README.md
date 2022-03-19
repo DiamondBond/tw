@@ -13,8 +13,8 @@ Building:
 ```
 
 Usage:
-``
+```
   TW days_to_zero_date days days ... [wf=nn].
   
   wf = wave factor (default 64, range 2-10000)
-``
+```
