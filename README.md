@@ -7,9 +7,13 @@ Changes compared to original:
   - strlwr() function inlined; 37-47
 
 Building:
+```
   make clean
   make tw
+```
 
 Usage:
+``
   TW days_to_zero_date days days ... [wf=nn].
   wf = wave factor (default 64, range 2-10000)
+``
